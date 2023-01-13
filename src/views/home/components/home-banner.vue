@@ -6,7 +6,7 @@ home.getBannerList();
 <template>
   <div class="home-banner">
     <!-- 轮播图 -->
-    <XtxCarousel :slides="home.bannerList"></XtxCarousel>
+    <XtxCarousel :slides="home.bannerList" :duration="3000"></XtxCarousel>
   </div>
 </template>
 
@@ -18,7 +18,7 @@ home.getBannerList();
   left: 0;
   top: 0;
   z-index: 98;
-  background-color: pink;
+  // background-color: pink;
   // less在vue3项目中的写法
   :deep(.carousel-btn.prev) {
     left: 270px !important;

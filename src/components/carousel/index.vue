@@ -1,6 +1,6 @@
 <script lang="ts" setup name="XtxCarousel">
 import { BannerItem } from "@/types/data";
-import { ref } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 // import { PropType } from "vue";
 // defineProps({
 //   slides: {
@@ -8,9 +8,15 @@ import { ref } from "vue";
 //     required: true,
 //   },
 // });
-const props = defineProps<{
-  slides: BannerItem[];
-}>();
+interface props {
+  slides: BannerItem[]; //必填项
+  autoPlay?: boolean;
+  duration?: number;
+}
+const props = withDefaults(defineProps<props>(), {
+  autoPlay: false,
+  duration: 3000,
+});
 const active = ref(0);
 const prev = () => {
   if (active.value <= 0) {
@@ -26,10 +32,35 @@ const next = () => {
     active.value++;
   }
 };
+let timer: number = -1;
+const play = () => {
+  // 不穿autoplay不轮播
+  if (!props.autoPlay) return;
+  clearInterval(timer);
+  timer = window.setInterval(() => {
+    next();
+    // console.log(123);
+  }, props.duration);
+};
+
+const stop = () => {
+  clearInterval(timer);
+};
+// requestAnimationFrame 1.不会卡顿 2.节约性能
+// 一旦使用const 进行变量声明， 变量的值将会成为变量的类型
+
+onMounted(() => {
+  // 如果不希望进入页面轮播
+  play();
+});
+
+onUnmounted(() => {
+  stop();
+});
 </script>
 
 <template>
-  <div class="xtx-carousel">
+  <div class="xtx-carousel" @mouseenter="play" @mouseleave="stop">
     <!-- 轮播图主体 -->
     <ul class="carousel-body">
       <li
@@ -57,6 +88,7 @@ const next = () => {
         v-for="(item, index) in slides"
         :key="item.id"
         :class="{ active: active === index }"
+        @click="active = index"
       ></span>
     </div>
   </div>

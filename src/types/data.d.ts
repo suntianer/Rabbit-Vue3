@@ -32,3 +32,22 @@ export type BannerItem = {
   type: string
 }
 
+
+export type GoodItem = {
+  id: string;
+  name: string;
+  desc: string;
+  price: string;
+  picture: string;
+  discount?: any;
+  orderNum: number;
+}
+
+
+
+export type HotGoods =  {
+  id: string;
+  picture: string;
+  title: string;
+  alt: string;
+}

@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import useStore from "@/store";
 const { category } = useStore();
-category.getAllCategory();
 </script>
 
 <template>
