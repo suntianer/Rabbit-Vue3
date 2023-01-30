@@ -2,6 +2,9 @@
 import XtxSkeleton from '@/components/skeleton/index.vue'
 import XtxCarousel from '@/components/carousel/index.vue'
 import XtxMore from '@/components/more/index.vue'
+import XtxBread from './Bread/index.vue'
+import XtxBreadItem from './Bread/Item.vue'
+import XtxCity from '@/components/city/index.vue'
 import { App } from 'vue'
 import { useIntersectionObserver } from '@vueuse/core'
 import defaultImg from '@/assets/images/200.png'
@@ -11,7 +14,9 @@ export default {
     app.component('XtxSkeleton', XtxSkeleton)
     app.component('XtxCarousel', XtxCarousel)
     app.component('XtxMore', XtxMore)
-
+    app.component('XtxBread', XtxBread)
+    app.component('XtxBreadItem', XtxBreadItem)
+    app.component('XtxCity', XtxCity)
     // 构建指令
     // <img :src="item.src" alt="" />
     // <img v-lazy="item.src" alt="" />
