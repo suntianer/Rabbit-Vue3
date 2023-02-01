@@ -1,3 +1,28 @@
+export type SpecValue = {
+  desc: string
+  name: string
+  picture: string
+  selected: boolean
+  disabled: boolean
+}
+// 商品的规格类型
+export type Spec = {
+  name: string
+  values: SpecValue[]
+}
+
+// sku的类型
+export type Sku = {
+  id: string
+  inventory: number
+  oldPrice: string
+  price: string
+  skuCode: string
+  specs: {
+    name: string
+    valueName: string
+  }[]
+}
 // 商品模块的类型声明
 export type GoodsInfo = {
   id: string
@@ -23,4 +48,6 @@ export type GoodsInfo = {
     id: string
     name: string
   }[]
+  specs: Spec[]
+  skus: Sku[]
 }

@@ -1,8 +1,17 @@
 <script lang="ts" setup name="GoodName">
 import { GoodsInfo } from "@/types/good";
+import { ref } from "vue";
+import { CityResult } from "@/components/city/index.vue";
 defineProps<{
   goods: GoodsInfo;
 }>();
+
+// 真实场景下， 应该向后端请求数据， 而不是写死
+const userAddress = ref("辽宁省 沈阳市 和平区");
+
+const changeCity = (changeResult: CityResult) => {
+  userAddress.value = `${changeResult.provinceName} ${changeResult.cityName} ${changeResult.countyName}`;
+};
 </script>
 <template>
   <p class="g-name">{{ goods.name }}</p>
@@ -18,7 +27,10 @@ defineProps<{
     </dl>
     <dl>
       <dt>配送</dt>
-      <dd>至 <XtxCity></XtxCity></dd>
+      <dd>
+        至
+        <XtxCity :userAddress="userAddress" @changeCity="changeCity"></XtxCity>
+      </dd>
     </dl>
     <dl>
       <dt>服务</dt>

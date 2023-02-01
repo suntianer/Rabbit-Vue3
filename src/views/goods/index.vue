@@ -6,11 +6,12 @@ import useStore from "@/store";
 import { useRoute } from "vue-router";
 import GoodsSales from "./components/goods-sales.vue";
 import GoodsName from "./components/goods-name.vue";
+import GoodsSku from "./components/goods-sku.vue";
 const { goods } = useStore();
 const route = useRoute();
 watchEffect(() => {
   const id = route.params.id as string;
-  goods.getGoodsInfo(id);
+  if (id && route.fullPath === `/goods/${id}`) goods.getGoodsInfo(id);
 });
 
 const { info } = storeToRefs(goods);
@@ -37,6 +38,7 @@ const { info } = storeToRefs(goods);
         </div>
         <div class="spec">
           <GoodsName :goods="info"></GoodsName>
+          <GoodsSku :goods="info"></GoodsSku>
         </div>
       </div>
       <!-- 商品详情 -->

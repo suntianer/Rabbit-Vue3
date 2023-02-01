@@ -1,7 +1,18 @@
 <script lang="ts" setup name="XtxCity">
+export type CityResult = {
+  provinceCode: string;
+  provinceName: string;
+  cityCode: string;
+  cityName: string;
+  countyCode: string;
+  countyName: string;
+};
 import { ref, watch } from "vue";
 import axios from "axios";
 import { onClickOutside } from "@vueuse/core";
+defineProps<{
+  userAddress?: string;
+}>();
 const active = ref(false);
 const toggle = () => {
   active.value = !active.value;
@@ -38,6 +49,10 @@ const getCityList = async () => {
 };
 getCityList();
 
+// 子组件选择完城市， 需要将数据传递给父组件
+const emit = defineEmits<{
+  (e: "changeCity", value: CityResult): void;
+}>();
 const selectCity = (city: AreaList) => {
   if (city.level === 0) {
     // 省
@@ -57,6 +72,8 @@ const selectCity = (city: AreaList) => {
     changeResult.value.countyCode = city.code;
     // 关闭弹窗
     active.value = false;
+    // 子传父
+    emit("changeCity", changeResult.value);
   }
 };
 
@@ -77,8 +94,9 @@ onClickOutside(target, (e) => {
 <template>
   <div class="xtx-city" ref="target">
     <div class="select" :class="{ active: active }" @click="toggle">
-      <span class="placeholder">请选择配送地址</span>
-      <span class="value"></span>
+      <span class="value" v-if="userAddress">{{ userAddress }}</span>
+      <span class="placeholder" v-else>请选择配送地址</span>
+
       <i class="iconfont icon-angle-down"></i>
     </div>
     <div class="option" v-show="active">
