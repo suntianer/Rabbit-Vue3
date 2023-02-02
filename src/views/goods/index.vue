@@ -11,10 +11,22 @@ const { goods } = useStore();
 const route = useRoute();
 watchEffect(() => {
   const id = route.params.id as string;
-  if (id && route.fullPath === `/goods/${id}`) goods.getGoodsInfo(id);
+  if (id && route.fullPath === `/goods/${id}`) {
+    goods.resetGoodsInfo();
+    goods.getGoodsInfo(id);
+  }
 });
 
 const { info } = storeToRefs(goods);
+const changeSku = (skuId: string) => {
+  console.log(skuId);
+  const sku = info.value.skus.find((item) => item.id === skuId);
+  if (sku) {
+    info.value.inventory = sku.inventory;
+    info.value.price = sku.price;
+    info.value.oldPrice = sku.price;
+  }
+};
 </script>
 <template>
   <div class="xtx-goods-page" v-if="info.categories">
@@ -38,7 +50,11 @@ const { info } = storeToRefs(goods);
         </div>
         <div class="spec">
           <GoodsName :goods="info"></GoodsName>
-          <GoodsSku :goods="info"></GoodsSku>
+          <GoodsSku
+            :goods="info"
+            :skuId="'1369155863389933570'"
+            @changeSku="changeSku"
+          ></GoodsSku>
         </div>
       </div>
       <!-- 商品详情 -->
