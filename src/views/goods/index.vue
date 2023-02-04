@@ -1,12 +1,14 @@
 <script lang="ts" setup>
 import GoodsImage from "./components/good-image.vue";
-import { watchEffect } from "vue";
+import { watchEffect, ref } from "vue";
 import { storeToRefs } from "pinia";
 import useStore from "@/store";
 import { useRoute } from "vue-router";
 import GoodsSales from "./components/goods-sales.vue";
 import GoodsName from "./components/goods-name.vue";
 import GoodsSku from "./components/goods-sku.vue";
+import GoodsHot from "./components/goods-hot.vue";
+import GoodsDetail from "@/views/goods/components/goods-detail.vue";
 const { goods } = useStore();
 const route = useRoute();
 watchEffect(() => {
@@ -27,6 +29,9 @@ const changeSku = (skuId: string) => {
     info.value.oldPrice = sku.price;
   }
 };
+const count = ref(5);
+const min = 1;
+const max = 10;
 </script>
 <template>
   <div class="xtx-goods-page" v-if="info.categories">
@@ -55,16 +60,28 @@ const changeSku = (skuId: string) => {
             :skuId="'1369155863389933570'"
             @changeSku="changeSku"
           ></GoodsSku>
+          <!-- 数字选择框 -->
+          <XtxNumbox v-model="count" :min="min" :max="max"></XtxNumbox>
+          <XtxButton type="primary" style="margin-top: 20px">
+            加入购物车
+          </XtxButton>
         </div>
       </div>
       <!-- 商品详情 -->
       <div class="goods-footer">
         <div class="goods-article">
           <!-- 商品+评价 -->
-          <div class="goods-tabs"></div>
+          <div class="goods-tabs">
+            <!-- 商品详情 -->
+            <GoodsDetail :goods="info" />
+          </div>
         </div>
         <!-- 24热榜+专题推荐 -->
-        <div class="goods-aside"></div>
+        <div class="goods-aside">
+          <GoodsHot :type="1" />
+          <GoodsHot :type="2" />
+          <GoodsHot :type="3" />
+        </div>
       </div>
     </div>
   </div>

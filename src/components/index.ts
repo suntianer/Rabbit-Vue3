@@ -5,6 +5,10 @@ import XtxMore from '@/components/more/index.vue'
 import XtxBread from './Bread/index.vue'
 import XtxBreadItem from './Bread/Item.vue'
 import XtxCity from '@/components/city/index.vue'
+import XtxNumbox from '@/components/numbox/index.vue'
+import XtxButton from '@/components/button/index.vue'
+import XtxCheckbox from '@/components/checkbox/index.vue'
+import XtxMessage from '@/components/message/message.vue'
 import { App } from 'vue'
 import { useIntersectionObserver } from '@vueuse/core'
 import defaultImg from '@/assets/images/200.png'
@@ -17,6 +21,10 @@ export default {
     app.component('XtxBread', XtxBread)
     app.component('XtxBreadItem', XtxBreadItem)
     app.component('XtxCity', XtxCity)
+    app.component('XtxNumbox', XtxNumbox)
+    app.component('XtxButton', XtxButton)
+    app.component('XtxCheckbox', XtxCheckbox)
+    app.component('XtxMessage', XtxMessage)
     // 构建指令
     // <img :src="item.src" alt="" />
     // <img v-lazy="item.src" alt="" />
